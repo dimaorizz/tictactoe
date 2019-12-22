@@ -6,7 +6,7 @@ let gameData = {};
 
 function initGame() {
     document.getElementById('play').setAttribute('value', 'Новая игра');
-    
+    document.getElementById('game').style.pointerEvents = 'auto';
     gameData.turns = 0;
     gameData.gameBoard = 
     [
@@ -33,14 +33,9 @@ function initGame() {
 }
 
 function findWinner(gameBoard) {
-    let rowSum, columnSum, diagLeftSum, diagRightSum, isDraw = 0;
+    let rowSum, columnSum, diagLeftSum, diagRightSum;
     let winInfo = {};
-    for(let i = 0; i < gameBoard.length; i++){
-        if(gameBoard[i].includes(0)){
-            isDraw++;
-        }
-    }
-    if(isDraw === 0){
+    if(gameData.turns >= gameData.gameBoard.length * gameData.gameBoard[0].length - 1){
         winInfo.isWinner = true;
         winInfo.winner = "draw";
         return winInfo;
@@ -88,6 +83,7 @@ function makeTurn(e){
         }
         if(findWinner(gameData.gameBoard).isWinner){
             alert(`Congrats ${findWinner(gameData.gameBoard).winner}!`);
+            document.getElementById('game').style.pointerEvents = 'none';
         }
         gameData.turns++;
     }
